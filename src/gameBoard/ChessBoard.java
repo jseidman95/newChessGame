@@ -64,7 +64,7 @@ public class ChessBoard
 		placeKings();
 	}
 	
-	public static void placePawns()
+	private static void placePawns()
 	{
 		for (int i=0;i<ButtonActions.EIGHT_INDEX;i++)
 		{
@@ -73,7 +73,7 @@ public class ChessBoard
 		}
 	}
 	
-	public static void placeBishops()
+	private static void placeBishops()
 	{
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.TWO_INDEX].setIcon(new Bishop(Piece.BLACK));
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.FIVE_INDEX].setIcon(new Bishop(Piece.BLACK));
@@ -81,7 +81,7 @@ public class ChessBoard
 		boardArray[ButtonActions.SEVEN_INDEX][ButtonActions.FIVE_INDEX].setIcon(new Bishop(Piece.WHITE));
 	}
 	
-	public static void placeCastles()
+	private static void placeCastles()
 	{
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.ZERO_INDEX].setIcon(new Castle(Piece.BLACK));
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.SEVEN_INDEX].setIcon(new Castle(Piece.BLACK));
@@ -89,7 +89,7 @@ public class ChessBoard
 		boardArray[ButtonActions.SEVEN_INDEX][ButtonActions.SEVEN_INDEX].setIcon(new Castle(Piece.WHITE));
 	}
 	
-	public static void placeHorses()
+	private static void placeHorses()
 	{
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.ONE_INDEX].setIcon(new Knight(Piece.BLACK));
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.SIX_INDEX].setIcon(new Knight(Piece.BLACK));
@@ -97,13 +97,13 @@ public class ChessBoard
 		boardArray[ButtonActions.SEVEN_INDEX][ButtonActions.SIX_INDEX].setIcon(new Knight(Piece.WHITE));
 	}
 
-	public static void placeQueens()
+	private static void placeQueens()
 	{
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.THREE_INDEX].setIcon(new Queen(Piece.BLACK));
 		boardArray[ButtonActions.SEVEN_INDEX][ButtonActions.THREE_INDEX].setIcon(new Queen(Piece.WHITE));
 	}
 	
-	public static void placeKings()
+	private static void placeKings()
 	{
 		boardArray[ButtonActions.ZERO_INDEX][ButtonActions.FOUR_INDEX].setIcon(new King(Piece.BLACK));
 		Piece.blackKingPosition = new GridPoint(ButtonActions.ZERO_INDEX,ButtonActions.FOUR_INDEX);

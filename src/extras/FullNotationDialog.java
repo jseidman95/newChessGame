@@ -28,7 +28,7 @@ public class FullNotationDialog extends JDialog
 		this.setSize(300,400);
 		this.setLocationRelativeTo(ChessFrame.jpnl);
 		this.setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE); //to avoid destroying and creating the dialog everytime the user closes and opens it
 		
 		this.jtblModel = jtblModel; //we use the table model from the Main frame so updates to the table there occur in this dialog
 		
