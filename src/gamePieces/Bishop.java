@@ -9,7 +9,7 @@ public class Bishop extends Piece
 {
 	public Bishop(String pieceColor)
 	{
-		super(pieceColor + "Bishop.png");
+		super("src/resources/" + pieceColor + "Bishop.png");
 		this.pieceColor = pieceColor;
 		
 		setColorMovements();

@@ -11,7 +11,7 @@ public class Queen extends Piece
 	
 	public Queen(String pieceColor)
 	{	
-		super(pieceColor + "Queen.png");
+		super("src/resources/" + pieceColor + "Queen.png");
 		this.pieceColor = pieceColor;
 		
 		bishopMovements = new Bishop(pieceColor);

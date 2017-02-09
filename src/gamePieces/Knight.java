@@ -15,7 +15,7 @@ public class Knight extends Piece
 	
 	public Knight(String pieceColor)
 	{
-		super(pieceColor + "Knight.png");
+		super("src/resources/" + pieceColor + "Knight.png");
 		
 		this.pieceColor = pieceColor;
 		

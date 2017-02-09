@@ -15,7 +15,7 @@ public class Castle extends Piece
 	
 	public Castle(String pieceColor)
 	{
-		super(pieceColor + "Castle.png");
+		super("src/resources/" + pieceColor + "Castle.png");
 		
 		this.pieceColor = pieceColor;
 		

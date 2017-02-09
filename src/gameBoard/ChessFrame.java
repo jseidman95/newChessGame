@@ -24,6 +24,7 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 import extras.FullNotationDialog;
+import extras.ImportExportDialog;
 import gamePieces.Piece;
 
 /*
@@ -37,18 +38,22 @@ public class ChessFrame
 	public static FullNotationDialog nld;
 	public static JFrame jfrm;
 	public static JPanel jpnl;
+	public static ImportExportDialog ieDialog;
 	
 	//components
 	public static JTable jtbl;
 	public static DefaultTableModel jtblModel;
 	public static JScrollPane jsp;
+	
 	public static JMenuBar jmb;
 	public static JMenu jmGame;
 	public static JMenu jmMoves;
 	public static JMenuItem undo;
 	public static JMenuItem newGame;
+	public static JMenuItem saveGame;
+	public static JMenuItem openGame;
 	
-	@SuppressWarnings("serial")
+	@SuppressWarnings({ "serial", "static-access" })
 	public ChessFrame()
 	{
 		//make the main frame
@@ -64,6 +69,9 @@ public class ChessFrame
 		//the promotion chooser dialog for when a pawn reaches the end of the board
 		pcd = new PromotionChooserDialog();
 				
+		//the dialog for importing and exporting a new game
+		ieDialog = new ImportExportDialog(jfrm);
+		
 		//make the JMenuBar and its components
 		jmb = new JMenuBar();
 		jmMoves = new JMenu("Moves");
@@ -80,6 +88,31 @@ public class ChessFrame
 				});
 		newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
 		jmGame.add(newGame);
+		
+		
+		saveGame = new JMenuItem("Save");
+		saveGame.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						ieDialog.export(jtbl);
+					}
+				});
+		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
+		jmGame.add(saveGame);
+		
+		openGame = new JMenuItem("Open");
+		openGame.addActionListener(new ActionListener()
+				{
+					@Override
+					public void actionPerformed(ActionEvent e)
+					{
+						ieDialog.importFromFile();
+					}
+				});
+		openGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+		jmGame.add(openGame);
 		jmb.add(jmGame);
 		
 		undo = new JMenuItem("undo");
@@ -141,7 +174,7 @@ public class ChessFrame
 		jfrm.setVisible(true);
 	}
 	
-	public void newGame()
+	public static void newGame()
 	{					
 		//make the table model for the algebraic notation table	
 		//jtblModel = (DefaultTableModel) jtbl.getModel();

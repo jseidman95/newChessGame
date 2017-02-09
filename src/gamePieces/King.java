@@ -19,7 +19,7 @@ public class King extends Piece
 	
 	public King(String pieceColor)
 	{
-		super(pieceColor + "King.png");
+		super("src/resources/" + pieceColor + "King.png");
 		
 		this.pieceColor = pieceColor;
 		setColorMovements();	

@@ -34,8 +34,8 @@ public class ChessBoard
 				boardArray[i][j] = new JButton();
 				
 				//set background colors
-				if((i+j) % 2 == 0) boardArray[i][j].setBackground(Color.WHITE);
-				else boardArray[i][j].setBackground(Color.GRAY);
+				if((i+j) % 2 == 0) boardArray[i][j].setBackground(new Color(222,184,135)); //light brown
+				else boardArray[i][j].setBackground(new Color(139,69,19)); //dark brown
 				boardArray[i][j].setOpaque(true); //this enables the background to be seen
 				
 				//create border color

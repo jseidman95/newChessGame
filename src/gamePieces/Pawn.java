@@ -17,7 +17,7 @@ public class Pawn extends Piece
 	
 	public Pawn(String pieceColor)
 	{
-		super(pieceColor + "Pawn.png");
+		super("src/resources/" + pieceColor + "Pawn.png");
 		this.pieceColor = pieceColor;
 		
 		setColorMovements();
