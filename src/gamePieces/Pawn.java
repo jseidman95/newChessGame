@@ -2,6 +2,7 @@ package gamePieces;
 
 import javax.swing.JButton;
 
+import extras.MyTableImport;
 import extras.NotationWriter;
 import gameBoard.ButtonActions;
 import gameBoard.ChessBoard;
@@ -136,7 +137,7 @@ public class Pawn extends Piece
 	}
 
 	@Override
-	public void placePieceAt(JButton secondButtonClicked)
+	public void placePieceAt(boolean showDialogs, JButton secondButtonClicked)
 	{
 		GridPoint from  = new GridPoint(getRow(firstButtonClicked),getCol(firstButtonClicked));
 		GridPoint to    = new GridPoint(getRow(secondButtonClicked),getCol(secondButtonClicked));
@@ -148,8 +149,12 @@ public class Pawn extends Piece
 			
 			ChessFrame.pcd.setPieceColors(firstPieceClicked);
 			ChessFrame.pcd.setSecondButtonPosition(secondButtonClicked.getLocationOnScreen());
-			ChessFrame.pcd.setVisible(true);
 			
+			if(showDialogs) ChessFrame.pcd.setVisible(true);
+			else
+			{
+				firstPieceClicked = MyTableImport.promotionPiece;
+			}
 			NotationWriter.writePromotion(firstPieceClicked);
 		}	
 		else
@@ -176,7 +181,7 @@ public class Pawn extends Piece
 			}
 		}
 		
-		super.placePieceAt(secondButtonClicked);
+		super.placePieceAt(true, secondButtonClicked);
 	}
 	
 }

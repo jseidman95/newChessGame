@@ -255,7 +255,7 @@ public abstract class Piece extends ImageIcon
 	}
 	
 	//place the piece at the given button/location and check if the enemy king has been checked or mated
-	public void placePieceAt(JButton buttonDropped)
+	public void placePieceAt(boolean showDialogs, JButton buttonDropped)
 	{
 		boolean inCheck = false;
 		GridPoint from  = new GridPoint(getRow(firstButtonClicked),getCol(firstButtonClicked));
@@ -277,7 +277,7 @@ public abstract class Piece extends ImageIcon
 			if(noneCanMove(firstPieceClicked.getEnemyColor()))
 			{
 				NotationWriter.writeCheck(this.getColor(), 'm');
-				JOptionPane.showMessageDialog(ChessFrame.jfrm, "Checkmate!");
+				if(showDialogs) JOptionPane.showMessageDialog(ChessFrame.jfrm, "Checkmate!");
 			}
 			else 
 			{
@@ -287,7 +287,7 @@ public abstract class Piece extends ImageIcon
 		}
 		else if(noneCanMove(firstPieceClicked.getEnemyColor()))
 		{
-			JOptionPane.showMessageDialog(ChessFrame.jfrm, "Stalemate!");
+			if(showDialogs) JOptionPane.showMessageDialog(ChessFrame.jfrm, "Stalemate!");
 		}
 				
 		//switch turns

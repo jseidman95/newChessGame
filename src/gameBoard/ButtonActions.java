@@ -161,7 +161,7 @@ public class ButtonActions implements MouseListener
 					//if the user moved the piece, place it at the correct location
 					if(buttonDropped != Piece.firstButtonClicked) 
 					{
-						Piece.firstPieceClicked.placePieceAt(buttonDropped);
+						Piece.firstPieceClicked.placePieceAt(true,buttonDropped);
 						ChessFrame.jpnl.repaint();
 					}
 					else //if the user dropped the piece back to its original spot, reset the user turn

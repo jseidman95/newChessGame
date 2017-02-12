@@ -291,7 +291,7 @@ public class King extends Piece
 	public void enableOverride(boolean enabled, int row, int col) {}
 
 	@Override
-	public void placePieceAt(JButton secondButtonClicked)
+	public void placePieceAt(boolean showDialogs, JButton secondButtonClicked)
 	{
 		GridPoint from  = new GridPoint(getRow(firstButtonClicked),getCol(firstButtonClicked));
 		GridPoint to    = new GridPoint(getRow(secondButtonClicked),getCol(secondButtonClicked));
@@ -312,7 +312,7 @@ public class King extends Piece
 		else Piece.undoStack.push(new Move(this,from,to));
 		
 		moved = true;
-		super.placePieceAt(secondButtonClicked);
+		super.placePieceAt(true,secondButtonClicked);
 	}
 	
 }

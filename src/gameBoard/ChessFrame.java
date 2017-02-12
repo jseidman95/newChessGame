@@ -99,7 +99,7 @@ public class ChessFrame
 						ieDialog.export(jtbl);
 					}
 				});
-		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
+		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
 		jmGame.add(saveGame);
 		
 		openGame = new JMenuItem("Open");

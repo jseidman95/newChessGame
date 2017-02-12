@@ -206,13 +206,13 @@ public class Castle extends Piece
 	}
 
 	@Override
-	public void placePieceAt(JButton secondButtonClicked)
+	public void placePieceAt(boolean showDialogs, JButton secondButtonClicked)
 	{
 		if(moved == false) 
 		{
 			moved = true;
 			
 		}
-		super.placePieceAt(secondButtonClicked);
+		super.placePieceAt(true,secondButtonClicked);
 	}
 }
