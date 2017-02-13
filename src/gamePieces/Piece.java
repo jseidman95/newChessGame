@@ -14,6 +14,7 @@ import gameBoard.ChessBoard;
 import gameBoard.ChessFrame;
 import gameBoard.GridPoint;
 import gameBoard.Move;
+import saveLoad.SaveProtocol;
 import gameBoard.ButtonActions;
 
 
@@ -257,6 +258,8 @@ public abstract class Piece extends ImageIcon
 	//place the piece at the given button/location and check if the enemy king has been checked or mated
 	public void placePieceAt(boolean showDialogs, JButton buttonDropped)
 	{
+		SaveProtocol.setEdited();
+		
 		boolean inCheck = false;
 		GridPoint from  = new GridPoint(getRow(firstButtonClicked),getCol(firstButtonClicked));
 		GridPoint to    = new GridPoint(getRow(buttonDropped),getCol(buttonDropped));
@@ -294,7 +297,7 @@ public abstract class Piece extends ImageIcon
 		firstButtonClicked = null;
 		ButtonActions.enableAllColor(firstPieceClicked.getEnemyColor());
 		
-		if(!inCheck) ChessFrame.jfrm.setTitle("My Chess Game (" + firstPieceClicked.getEnemyColor() + " to move...)");
-		else ChessFrame.jfrm.setTitle("My Chess Game (" + firstPieceClicked.getEnemyColor() + " in CHECK to move...)");
+		if(!inCheck) ChessFrame.jfrm.setTitle("My Chess Game (" + firstPieceClicked.getEnemyColor() + " to move...) -Edited");
+		else ChessFrame.jfrm.setTitle("My Chess Game (" + firstPieceClicked.getEnemyColor() + " in CHECK to move...) -Edited");
 	}
 }

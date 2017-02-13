@@ -13,7 +13,7 @@ public class MyTableExport
 		try
 		{
 			writer = new FileOutputStream(fileName);
-			
+	
 			for (int i=0;i<dataTable.getRowCount();i++)
 			{
 				for (int j=0;j<dataTable.getColumnCount();j++) //start at one because we dont need to write the move number

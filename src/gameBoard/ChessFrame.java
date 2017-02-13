@@ -24,8 +24,12 @@ import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
 
 import extras.FullNotationDialog;
-import extras.ImportExportDialog;
+import extras.MyTableExport;
+import extras.MyTableImport;
 import gamePieces.Piece;
+import saveLoad.ExitSave;
+import saveLoad.ImportExportDialog;
+import saveLoad.SaveProtocol;
 
 /*
  * This class contains all objects and methods that involve the main frame.  Therefore it contains methods having to do with the board,
@@ -59,7 +63,9 @@ public class ChessFrame
 		//make the main frame
 		jfrm = new JFrame("My Chess Game");
 		jfrm.setSize(600, 600);
-		jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		jfrm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
 		jfrm.setLayout(new BorderLayout(0,-2)); //eliminate the space in between the components for a tight fit
 		jfrm.setLocationRelativeTo(null);
 		
@@ -70,7 +76,22 @@ public class ChessFrame
 		pcd = new PromotionChooserDialog();
 				
 		//the dialog for importing and exporting a new game
-		ieDialog = new ImportExportDialog(jfrm);
+		ieDialog = new ImportExportDialog(jfrm,"MyChessGame.txt")
+				{
+					@Override
+					public void save(String fileName)
+					{
+						MyTableExport.writeTableToFile(jtbl, fileName);
+					}
+					
+					@Override
+					public void load(String fileName)
+					{
+						MyTableImport.readImport(fileName);
+					}
+				};
+				
+		jfrm.addWindowListener(new ExitSave(jfrm,ieDialog));
 		
 		//make the JMenuBar and its components
 		jmb = new JMenuBar();
@@ -96,7 +117,8 @@ public class ChessFrame
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
-						ieDialog.export(jtbl);
+						ieDialog.exportToFile();
+						if(SaveProtocol.saved) ChessFrame.jfrm.setTitle(ChessFrame.jfrm.getTitle().replace("-Edited", ""));
 					}
 				});
 		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -177,7 +199,6 @@ public class ChessFrame
 	public static void newGame()
 	{					
 		//make the table model for the algebraic notation table	
-		//jtblModel = (DefaultTableModel) jtbl.getModel();
 		jtblModel = new DefaultTableModel();
 		jtbl.setModel(jtblModel);
 		

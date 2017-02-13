@@ -4,6 +4,7 @@ import gamePieces.Castle;
 import gamePieces.King;
 import gamePieces.Pawn;
 import gamePieces.Piece;
+import saveLoad.SaveProtocol;
 
 /*
  * This class creates chess move objects.  This means that it packages information that would otherwise be lost 
@@ -76,6 +77,8 @@ public class Move
 	//This all-in-one method undoes any previous move by utilizing the move stack in the ChessBoard class
 	public void undo()
 	{
+		SaveProtocol.setEdited();
+		
 		ChessBoard.boardArray[from.getX()][from.getY()].setIcon(pieceMoved); 
 		ChessBoard.boardArray[to.getX()][to.getY()].setIcon(pieceTaken);
 		
@@ -119,9 +122,9 @@ public class Move
 		//update the title
 		if(Piece.kingIsInCheck(pieceMoved.getColor())) 
 		{
-			ChessFrame.jfrm.setTitle("My Chess Game (" + pieceMoved.getColor() + " in CHECK to move...)");
+			ChessFrame.jfrm.setTitle("My Chess Game (" + pieceMoved.getColor() + " in CHECK to move...) -Edited");
 		}
-		else ChessFrame.jfrm.setTitle("My Chess Game (" + pieceMoved.getColor() + " to move...)");
+		else ChessFrame.jfrm.setTitle("My Chess Game (" + pieceMoved.getColor() + " to move...) -Edited");
 		
 		//reset the turn
 		ButtonActions.enableAllColor(pieceMoved.getColor());

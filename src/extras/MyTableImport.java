@@ -21,6 +21,8 @@ public class MyTableImport
 	
 	public static void readImport(String fileName)
 	{
+		ChessFrame.newGame();
+		
 		Scanner scan = null;
 		ArrayList<String> moves = new ArrayList<>();
 		
@@ -58,7 +60,7 @@ public class MyTableImport
 		int toRow;
 		int toCol;
 		
-		//ADD CASTLE AND A WAY TO CONTINUE A GAME WHILE IN THE MIDDLE OF ANOTHER
+		//ADD A WAY TO CONTINUE A GAME WHILE IN THE MIDDLE OF ANOTHER
 		
 		if(move.equals("O-O-O"))
 		{
