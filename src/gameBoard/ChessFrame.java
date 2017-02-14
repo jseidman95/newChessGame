@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.util.Stack;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -27,9 +26,8 @@ import extras.FullNotationDialog;
 import extras.MyTableExport;
 import extras.MyTableImport;
 import gamePieces.Piece;
-import saveLoad.ExitSave;
 import saveLoad.ImportExportDialog;
-import saveLoad.SaveProtocol;
+import saveLoad.SaveFrame;
 
 /*
  * This class contains all objects and methods that involve the main frame.  Therefore it contains methods having to do with the board,
@@ -40,7 +38,7 @@ public class ChessFrame
 	//frames and dialogs
 	public static PromotionChooserDialog pcd;
 	public static FullNotationDialog nld;
-	public static JFrame jfrm;
+	public static SaveFrame jfrm;
 	public static JPanel jpnl;
 	public static ImportExportDialog ieDialog;
 	
@@ -60,21 +58,6 @@ public class ChessFrame
 	@SuppressWarnings({ "serial", "static-access" })
 	public ChessFrame()
 	{
-		//make the main frame
-		jfrm = new JFrame("My Chess Game");
-		jfrm.setSize(600, 600);
-	
-		jfrm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		
-		jfrm.setLayout(new BorderLayout(0,-2)); //eliminate the space in between the components for a tight fit
-		jfrm.setLocationRelativeTo(null);
-		
-		//make the panel that will hold the game board
-		jpnl = new JPanel(new GridLayout(ButtonActions.EIGHT_INDEX,ButtonActions.EIGHT_INDEX));
-		
-		//the promotion chooser dialog for when a pawn reaches the end of the board
-		pcd = new PromotionChooserDialog();
-				
 		//the dialog for importing and exporting a new game
 		ieDialog = new ImportExportDialog(jfrm,"MyChessGame.txt")
 				{
@@ -91,7 +74,27 @@ public class ChessFrame
 					}
 				};
 				
-		jfrm.addWindowListener(new ExitSave(jfrm,ieDialog));
+		if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) 
+		{
+			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			//System.setProperty("com.apple.mrj.application.apple.menu.about.name", "My Chess Game");
+		}
+		
+		//make the main frame
+		jfrm = new SaveFrame(ieDialog);
+		jfrm.setSize(600, 600);
+	
+		jfrm.maxButton.setEnabled(false);
+		//jfrm.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		//jfrm.setLayout(new BorderLayout(0,-2)); //eliminate the space in between the components for a tight fit
+		jfrm.setLocationRelativeTo(null);
+		
+		//make the panel that will hold the game board
+		jpnl = new JPanel(new GridLayout(ButtonActions.EIGHT_INDEX,ButtonActions.EIGHT_INDEX));
+		
+		//the promotion chooser dialog for when a pawn reaches the end of the board
+		pcd = new PromotionChooserDialog();
 		
 		//make the JMenuBar and its components
 		jmb = new JMenuBar();
@@ -117,8 +120,7 @@ public class ChessFrame
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
-						ieDialog.exportToFile();
-						if(SaveProtocol.saved) ChessFrame.jfrm.setTitle(ChessFrame.jfrm.getTitle().replace("-Edited", ""));
+						ieDialog.exportToFile(jfrm);
 					}
 				});
 		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -130,7 +132,7 @@ public class ChessFrame
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
-						ieDialog.importFromFile();
+						ieDialog.importFromFile(jfrm);
 					}
 				});
 		openGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -174,7 +176,11 @@ public class ChessFrame
 			@Override
 			public void mouseClicked(MouseEvent e)
 			{
-				if(e.getClickCount() == 2) nld.setVisible(true);
+				if(e.getClickCount() == 2) 
+				{
+					nld.setLocationRelativeTo(jfrm);
+					nld.setVisible(true);
+				}
 			}
 			public void mousePressed(MouseEvent e)  {}
 			public void mouseReleased(MouseEvent e) {}

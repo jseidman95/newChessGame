@@ -1,24 +1,23 @@
 package saveLoad;
 
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class ExitSave implements WindowListener
+public class ExitSave implements ActionListener
 {
-	private JFrame mainFrame;
+	private SaveFrame mainFrame;
 	private ImportExportDialog ie; 
 	
-	public ExitSave(JFrame mainFrame,ImportExportDialog ie)
+	public ExitSave(SaveFrame mainFrame,ImportExportDialog ie)
 	{
 		this.mainFrame = mainFrame;
 		this.ie = ie;
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
 		if(SaveProtocol.saved) System.exit(0);
 		else
@@ -28,17 +27,11 @@ public class ExitSave implements WindowListener
 			if(answer == JOptionPane.YES_OPTION) System.exit(0);
 			else if(answer == JOptionPane.NO_OPTION) 
 			{
-				ie.exportToFile();
+				ie.exportToFile(mainFrame);
 				System.exit(0);
 			}
 		}
 	}
 
-	public void windowOpened(WindowEvent e) {}
-	public void windowClosed(WindowEvent e) {}
-	public void windowIconified(WindowEvent e) {}
-	public void windowDeiconified(WindowEvent e) {}
-	public void windowActivated(WindowEvent e) {}
-	public void windowDeactivated(WindowEvent e) {}
 
 }

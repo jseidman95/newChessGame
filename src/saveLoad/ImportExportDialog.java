@@ -14,7 +14,7 @@ public abstract class ImportExportDialog extends FileDialog
 		this.defaultFile = defaultFile;
 	}
 
-	public void exportToFile()
+	public void exportToFile(SaveFrame jfrm)
 	{		
 		if(SaveProtocol.saved) save(SaveProtocol.savedFile);
 		else
@@ -29,7 +29,7 @@ public abstract class ImportExportDialog extends FileDialog
 			if(this.getFile() != null) 
 			{
 				save(fileName);
-				SaveProtocol.setSaved(fileName);
+				SaveProtocol.setSaved(jfrm,fileName);
 			}
 			
 			
@@ -37,7 +37,7 @@ public abstract class ImportExportDialog extends FileDialog
 		}
 	}
 	
-	public void importFromFile()
+	public void importFromFile(SaveFrame jfrm)
 	{
 		this.setMode(FileDialog.LOAD);
 		this.setVisible(true);
@@ -46,7 +46,8 @@ public abstract class ImportExportDialog extends FileDialog
 		if(this.getFile() != null) 
 		{
 			load(fileName);
-			SaveProtocol.setSaved(fileName);
+			SaveProtocol.setSaved(jfrm,fileName);
+			
 		}
 		
 		this.setVisible(false);
