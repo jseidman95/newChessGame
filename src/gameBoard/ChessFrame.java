@@ -26,7 +26,6 @@ import extras.FullNotationDialog;
 import extras.MyTableExport;
 import extras.MyTableImport;
 import gamePieces.Piece;
-import saveLoad.ImportExportDialog;
 import saveLoad.SaveFrame;
 
 /*
@@ -40,7 +39,6 @@ public class ChessFrame
 	public static FullNotationDialog nld;
 	public static SaveFrame jfrm;
 	public static JPanel jpnl;
-	public static ImportExportDialog ieDialog;
 	
 	//components
 	public static JTable jtbl;
@@ -57,23 +55,7 @@ public class ChessFrame
 	
 	@SuppressWarnings({ "serial", "static-access" })
 	public ChessFrame()
-	{
-		//the dialog for importing and exporting a new game
-		ieDialog = new ImportExportDialog(jfrm,"MyChessGame.txt")
-				{
-					@Override
-					public void save(String fileName)
-					{
-						MyTableExport.writeTableToFile(jtbl, fileName);
-					}
-					
-					@Override
-					public void load(String fileName)
-					{
-						MyTableImport.readImport(fileName);
-					}
-				};
-				
+	{		
 		if(System.getProperty("os.name").toLowerCase().indexOf("mac") >= 0) 
 		{
 			System.setProperty("apple.laf.useScreenMenuBar", "true");
@@ -81,7 +63,20 @@ public class ChessFrame
 		}
 		
 		//make the main frame
-		jfrm = new SaveFrame(ieDialog);
+		jfrm = new SaveFrame("MyChessGame.txt")
+			{
+				@Override
+				public void save(String fileName)
+				{
+					MyTableExport.writeTableToFile(jtbl, fileName);
+				}
+				
+				@Override
+				public void load(String fileName)
+				{
+					MyTableImport.readImport(fileName);
+				}
+			};
 		jfrm.setSize(600, 600);
 	
 		jfrm.maxButton.setEnabled(false);
@@ -120,7 +115,7 @@ public class ChessFrame
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
-						ieDialog.exportToFile(jfrm);
+						jfrm.ieDialog.exportToFile();
 					}
 				});
 		saveGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,Toolkit.getDefaultToolkit().getDefaultToolkit().getMenuShortcutKeyMask()));
@@ -132,7 +127,7 @@ public class ChessFrame
 					@Override
 					public void actionPerformed(ActionEvent e)
 					{
-						ieDialog.importFromFile(jfrm);
+						jfrm.ieDialog.importFromFile();
 					}
 				});
 		openGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));

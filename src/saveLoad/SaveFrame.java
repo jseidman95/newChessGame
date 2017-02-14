@@ -15,9 +15,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class SaveFrame extends JFrame
+public abstract class SaveFrame extends JFrame
 {
 	private JPanel titleBar;
+	public ImportExportDialog ieDialog;
 	
 	public static final URL redResource      = SaveFrame.class.getResource("redX.png");
 	public static final URL redGrayResource  = SaveFrame.class.getResource("greyRedX.png");
@@ -33,7 +34,7 @@ public class SaveFrame extends JFrame
 	public JButton maxButton = new JButton(greenIcon);
 	public JButton minButton = new JButton(yellowIcon);
 	
-	public SaveFrame(ImportExportDialog ieDialog)
+	public SaveFrame()
 	{
 		this.setUndecorated(true);
 		this.setLayout(new BorderLayout());
@@ -73,8 +74,16 @@ public class SaveFrame extends JFrame
 		titleBar.add(myBox, BorderLayout.WEST);
 		titleBar.setBackground(new Color(241,241,241));
 		
+		ieDialog = new ImportExportDialog(this,"Untitled.txt");
+		
 		this.add(titleBar,BorderLayout.PAGE_START);
 		this.setVisible(true);
+	}
+	
+	public SaveFrame(String fileName)
+	{
+		this();
+		ieDialog.setDefaultFile(fileName);
 	}
 	
 	public void setButtonEdited()
@@ -86,4 +95,7 @@ public class SaveFrame extends JFrame
 	{
 		currentCloseButton.setIcon(redIcon);
 	}
+
+	public abstract void save(String fileName);
+	public abstract void load(String fileName);
 }

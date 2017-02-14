@@ -27,7 +27,7 @@ public class ExitSave implements ActionListener
 			if(answer == JOptionPane.YES_OPTION) System.exit(0);
 			else if(answer == JOptionPane.NO_OPTION) 
 			{
-				ie.exportToFile(mainFrame);
+				ie.exportToFile();
 				System.exit(0);
 			}
 		}

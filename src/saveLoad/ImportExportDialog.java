@@ -1,22 +1,23 @@
 package saveLoad;
 
 import java.awt.FileDialog;
-import java.awt.Frame;
 
 @SuppressWarnings("serial")
-public abstract class ImportExportDialog extends FileDialog 
+public class ImportExportDialog extends FileDialog 
 {
 	private String defaultFile;
+	private SaveFrame parent;
 	
-	public ImportExportDialog (Frame parent,String defaultFile)
+	public ImportExportDialog (SaveFrame parent,String defaultFile)
 	{
 		super(parent);
+		this.parent = parent;
 		this.defaultFile = defaultFile;
 	}
 
-	public void exportToFile(SaveFrame jfrm)
+	public void exportToFile()
 	{		
-		if(SaveProtocol.saved) save(SaveProtocol.savedFile);
+		if(SaveProtocol.saved) parent.save(SaveProtocol.savedFile);
 		else
 		{		
 			this.setMode(FileDialog.SAVE);
@@ -28,16 +29,15 @@ public abstract class ImportExportDialog extends FileDialog
 			
 			if(this.getFile() != null) 
 			{
-				save(fileName);
-				SaveProtocol.setSaved(jfrm,fileName);
-			}
-			
+				parent.save(fileName);
+				SaveProtocol.setSaved(parent,fileName);
+			}	
 			
 			this.setVisible(false);
 		}
 	}
 	
-	public void importFromFile(SaveFrame jfrm)
+	public void importFromFile()
 	{
 		this.setMode(FileDialog.LOAD);
 		this.setVisible(true);
@@ -45,14 +45,16 @@ public abstract class ImportExportDialog extends FileDialog
 		String fileName = this.getDirectory() + this.getFile();
 		if(this.getFile() != null) 
 		{
-			load(fileName);
-			SaveProtocol.setSaved(jfrm,fileName);
+			parent.load(fileName);
+			SaveProtocol.setSaved(parent,fileName);
 			
 		}
 		
 		this.setVisible(false);
 	}
 	
-	public abstract void save(String fileName);
-	public abstract void load(String fileName);
+	public void setDefaultFile(String fileName)
+	{
+		this.defaultFile = fileName;
+	}
 }
