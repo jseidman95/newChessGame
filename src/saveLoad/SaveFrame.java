@@ -20,15 +20,21 @@ public abstract class SaveFrame extends JFrame
 	private JPanel titleBar;
 	public ImportExportDialog ieDialog;
 	
-	public static final URL redResource      = SaveFrame.class.getResource("redX.png");
-	public static final URL redGrayResource  = SaveFrame.class.getResource("greyRedX.png");
-	public static final URL yellowResource   = SaveFrame.class.getResource("yellowCircle.png");
-	public static final URL greenResource    = SaveFrame.class.getResource("greenCircle.png");
+	public static final URL redResource       = SaveFrame.class.getResource("redX.png");
+	public static final URL redGrayResource   = SaveFrame.class.getResource("greyRedX.png");
+	public static final URL yellowResource    = SaveFrame.class.getResource("yellowCircle.png");
+	public static final URL greenResource     = SaveFrame.class.getResource("greenCircle.png");
+	public static final URL redXHover         = SaveFrame.class.getResource("redXHover.png");
+	public static final URL yellowCircleHover = SaveFrame.class.getResource("yellowCircleHover.png");
+	public static final URL greenCircleHover  = SaveFrame.class.getResource("greenCircleHover.png");
 	
 	public static final ImageIcon redIcon     = new ImageIcon(redResource);
 	public static final ImageIcon redGrayIcon = new ImageIcon(redGrayResource);
 	public static final ImageIcon yellowIcon  = new ImageIcon(yellowResource);
 	public static final ImageIcon greenIcon   = new ImageIcon(greenResource);
+	public static final ImageIcon redIconHover    = new ImageIcon(redXHover);
+	public static final ImageIcon greenIconHover  = new ImageIcon(greenCircleHover);
+	public static final ImageIcon yellowIconHover = new ImageIcon(yellowCircleHover);
 	
 	public JButton currentCloseButton;
 	public JButton maxButton = new JButton(greenIcon);
@@ -43,6 +49,8 @@ public abstract class SaveFrame extends JFrame
 		maxButton.setBorderPainted(false);
 		minButton.setFocusable(false);
 		maxButton.setFocusable(false);
+		minButton.setRolloverIcon(yellowIconHover);
+		maxButton.setRolloverIcon(greenIconHover);
 		
 		minButton.addActionListener(new ActionListener()
 			{
@@ -54,6 +62,7 @@ public abstract class SaveFrame extends JFrame
 			});
 		
 		this.currentCloseButton = new JButton(redIcon);
+		this.currentCloseButton.setRolloverIcon(redIconHover);
 		this.currentCloseButton.setFocusable(false);
 		this.currentCloseButton.setBorderPainted(false);
 		this.currentCloseButton.setBorder(new EmptyBorder(2,2,2,8));
@@ -89,11 +98,13 @@ public abstract class SaveFrame extends JFrame
 	public void setButtonEdited()
 	{
 		currentCloseButton.setIcon(redGrayIcon);
+		currentCloseButton.setRolloverEnabled(false);
 	}
 	
 	public void setButtonSaved()
 	{
 		currentCloseButton.setIcon(redIcon);
+		currentCloseButton.setRolloverEnabled(true);
 	}
 
 	public abstract void save(String fileName);
